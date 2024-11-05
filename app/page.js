@@ -4,7 +4,7 @@ import { currencyFormatter } from "./lib/utils";
 import ExpenceCategoryItem from "./components/ExpencCategoryItems";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import Panel from "./components/panel";
+import AddIncomePanel from "@/app/components/panels/AddIncomePanel";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -17,14 +17,16 @@ const DUMMY_DATA = [
 ];
 
 export default function Home() {
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [showAddIncomePanel, setShowAddIncomePanel] = useState(false);
 
   return (
     <>
       <div>
-        <Panel show={isPanelOpen} onClose={setIsPanelOpen}>
-          <h3>Stavros</h3>
-        </Panel>
+        {/* Main Content */}
+        <AddIncomePanel
+          show={showAddIncomePanel}
+          onClose={setShowAddIncomePanel}
+        />
         <main className="container max-w-2xl px-6 mx-auto">
           <section className="py-3">
             <small className="text-gray-400 text-md">My Balance</small>
@@ -38,7 +40,12 @@ export default function Home() {
             >
               + Expenses
             </button>
-            <button className="btn btn-primary-outline">+ Income</button>
+            <button
+              onClick={() => setShowAddIncomePanel(true)}
+              className="btn btn-primary-outline"
+            >
+              + Income
+            </button>
           </section>
 
           <section className="py-6">
@@ -54,6 +61,7 @@ export default function Home() {
               ))}
             </div>
           </section>
+
           <section className="py-6">
             <h3 className="text-2xl">Stats</h3>
             <div className="w-1/2 mx-auto">
